@@ -9,7 +9,7 @@
 
 ### 🔥 About Me
 
-I'm a **17-year-old programming enthusiast** from Brazil, specializing in IoT systems and backend development. When I'm not coding, you'll find me:
+I'm a **18-year-old programming enthusiast** from Brazil, specializing in IoT systems and backend development. When I'm not coding, you'll find me:
 
 - 🌐 Developing IoT solutions with ESP32 and Arduino
 - 🖥️ Building robust backend systems with Spring Boot
