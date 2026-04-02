@@ -29,19 +29,26 @@ def format_with_gemini(raw_text):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}"
         
         prompt = f"""
-        Você é um recrutador tech internacional e um especialista em design de README do GitHub.
-        Abaixo estão os dados crus raspados do meu perfil do LinkedIn (Sobre mim, experiências, educação, competências, etc) que podem estar em português ou em inglês.
+        Você é um recrutador tech internacional e um engenheiro de software especialista em design de README do GitHub.
         
-        Seu trabalho é pegar essa bagunça de texto, TRADUZIR TUDO PARA INGLÊS PROFISSIONAL, e transformar em um Markdown maravilhoso, direto e limpo para o meu README do GitHub.
+        Eu vou te passar os dados brutos de um scrape do meu LinkedIn. Ele está cheio de lixo (como "Gostar, Comentar, Enviar, Exibido apenas a você").
         
-        Regras:
-        - O texto final deve estar 100% em INGLÊS.
-        - Organize por seções lógicas (Ex: 💼 Experience, 🎓 Education, 🚀 Skills & Projects, etc).
-        - Use listas e tópicos curtos (bullet points) no lugar de textões.
-        - Não coloque título principal (Ex: "Welcome to Magno's profile") pois meu README já tem um cabeçalho. Foque apenas no miolo.
-        - Devolva APENAS o código Markdown gerado, sem blocos de código (como ```markdown) em volta. O resultado irá direto para o meu arquivo.
+        SUA TAREFA EXCLUSIVA:
+        1. Limpar todo esse lixo.
+        2. Pegar as informações ÚTEIS (Experiência, Sobre mim, Projetos, Skills, Educação).
+        3. Traduzir tudo de forma natural para o INGLÊS.
+        4. Criar um documento Markdown organizado em seções elegantes:
+           - 👨‍💻 About Me
+           - 💼 Experience
+           - 🛠️ Skills & Technologies
+           - 🎓 Education
         
-        Aqui estão os dados:
+        Siga as regras:
+        - Não coloque título `<h1>` ou `# Welcome`, comece direto no `### 👨‍💻 About Me`
+        - Não coloque bloco ````markdown
+        - Devolva a resposta final 100% pronta para eu colar no meu readme.
+        
+        DADOS DO LINKEDIN:
         {raw_text}
         """
         
