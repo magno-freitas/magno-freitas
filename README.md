@@ -12,7 +12,7 @@
 <!-- LINKEDIN_ABOUT_START -->
 <!-- IA FAILING -->
 
-Erro ao conectar com a IA do Google para formatar o currículo.
+Erro ao conectar com a IA Groq para formatar o currículo.
 <!-- LINKEDIN_ABOUT_END -->
 
 ---
