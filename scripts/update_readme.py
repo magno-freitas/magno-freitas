@@ -2,72 +2,65 @@ import os
 import re
 import requests
 from bs4 import BeautifulSoup
-import urllib.parse
 
-# Pegando os cookies dos Secrets do GitHub
-LINKEDIN_LI_AT = os.getenv('LINKEDIN_LI_AT')
-LINKEDIN_JSESSIONID = os.getenv('LINKEDIN_JSESSIONID')
 LINKEDIN_PROFILE_ID = 'magno-freitas'
 
 def main():
-    if not LINKEDIN_LI_AT or not LINKEDIN_JSESSIONID:
-        print("Erro: Cookies do LinkedIn não encontrados.")
-        import sys
-        sys.exit(1)
-
-    print(f"Buscando perfil de: {LINKEDIN_PROFILE_ID} usando Web Scraping puro...")
+    print(f"Buscando perfil público de: {LINKEDIN_PROFILE_ID}...")
     try:
         url = f"https://www.linkedin.com/in/{LINKEDIN_PROFILE_ID}/"
         
-        # O JSESSIONID normalmente tem aspas ao redor do valor, precisamos garantir que o Header csrf-token tenha o valor exato (sem as aspas)
-        csrf_token = LINKEDIN_JSESSIONID.replace('"', '')
-
+        # Simulando um navegador muito padrão vindo do Google
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
-            'csrf-token': csrf_token,
-            'x-restli-protocol-version': '2.0.0'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Referer': 'https://www.google.com/'
         }
 
-        cookies = {
-            'li_at': LINKEDIN_LI_AT,
-            'JSESSIONID': LINKEDIN_JSESSIONID
-        }
-
-        # Acessando a página para capturar os dados (LinkedIn muitas vezes embute os dados do perfil em tags <code id="..._bpr_...">)
-        # Vamos usar a rota da API interna do LinkedIn (Voyager) que é o que a web usa
-        encoded_id = urllib.parse.quote(LINKEDIN_PROFILE_ID)
-        api_url = f"https://www.linkedin.com/voyager/api/identity/profiles/{encoded_id}/profileView"
-        
-        response = requests.get(api_url, headers=headers, cookies=cookies)
+        # Não passaremos cookies, faremos scraping da versão pública do perfil
+        response = requests.get(url, headers=headers)
         
         if response.status_code != 200:
-            print(f"Erro ao acessar API do LinkedIn: HTTP {response.status_code}")
-            print(response.text[:200])
+            print(f"Erro ao acessar perfil público: HTTP {response.status_code}")
             import sys
             sys.exit(1)
 
-        data = response.json()
+        soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Extraindo o summary (Sobre/About)
+        # Procura pelo summary na versão HTML do perfil (o LinkedIn esconde as vezes dentro de tags "core-section-container")
+        summary_section = soup.find('section', {'data-section': 'summary'})
+        
         summary = ""
-        if 'profile' in data and 'summary' in data['profile']:
-            summary = data['profile']['summary']
-            
+        if summary_section:
+            summary_text_elem = summary_section.find('div', class_='core-section-container__content')
+            if summary_text_elem:
+                summary = summary_text_elem.get_text(strip=True, separator='\n')
+
+        # Fallback: Se não achar, o LinkedIn injeta dados em tags <code style="display: none">
         if not summary:
-            # Alternativa dependendo da estrutura de retorno da API
-            try:
-                elements = data.get('included', [])
-                for el in elements:
-                    if 'summary' in el and el['summary']:
-                        summary = el['summary']
-                        break
-            except:
-                pass
+            print("Tentando buscar em tags <code> embarcadas...")
+            import json
+            for code_tag in soup.find_all('code'):
+                try:
+                    data = json.loads(code_tag.text)
+                    # Procurando a chave "summary" perdidamente nos jsons escondidos
+                    if isinstance(data, dict):
+                        if 'included' in data:
+                            for item in data['included']:
+                                if 'summary' in item and item['summary']:
+                                    summary = item['summary']
+                                    break
+                        elif 'summary' in data:
+                            summary = data['summary']
+                except:
+                    pass
 
         if not summary:
-            print("Nenhum 'Sobre/Summary' encontrado no JSON do LinkedIn.")
-            return
+            print("Nenhum 'Sobre/Summary' encontrado no HTML público. O LinkedIn pode estar bloqueando visitantes não logados.")
+            import sys
+            sys.exit(1)
+
+        print(f"Resumo encontrado: {summary[:50]}...")
 
         # Lendo o README atual
         with open('README.md', 'r', encoding='utf-8') as f:
@@ -84,7 +77,7 @@ def main():
         with open('README.md', 'w', encoding='utf-8') as f:
             f.write(updated_readme)
             
-        print("README.md atualizado com sucesso com os dados do LinkedIn!")
+        print("README.md atualizado com sucesso!")
 
     except Exception as e:
         print(f"Erro durante a execução: {e}")
