@@ -88,27 +88,36 @@ def main():
         
         extracted_sections = []
         
-        # O LinkedIn encapsula as seções importantes em tags <section> com certos identificadores
-        # Vamos pegar todas as seções que contenham as classes comuns de conteúdo de perfil
-        sections = driver.find_elements(By.XPATH, "//section[contains(@class, 'artdeco-card') or contains(@class, 'pv-profile-card')]")
-        
-        for sec in sections:
-            # Pegando o texto visível da seção inteira
-            text = sec.text
-            if text and len(text) > 10:
-                # O LinkedIn tem muitos botões como "Mostrar todos", "Exibir", etc. 
-                # Vamos tentar filtrar linhas muito curtas que são só botões
-                lines = [line.strip() for line in text.split('\n') if line.strip() and len(line.strip()) > 3]
+        # Estratégia coringa: O LinkedIn muda nomes de classes o tempo todo. 
+        # Sabemos que o perfil fica dentro da main class 'scaffold-layout__main'
+        try:
+            main_layout = driver.find_element(By.TAG_NAME, "main")
+            
+            # Pega as seções filhas diretas que compõem o corpo do perfil
+            sections = main_layout.find_elements(By.XPATH, "./section | .//section[contains(@class, 'artdeco-card') or contains(@class, 'pv-profile-card')]")
+            
+            # Se não encontrar assim, pega simplesmente tudo que for <section> dentro de main
+            if len(sections) < 2:
+                sections = main_layout.find_elements(By.XPATH, ".//section")
                 
-                # Ignora a seção de "Pessoas que você talvez conheça" e similares do layout lateral
-                if any(ignored in text.lower() for ignored in ["pessoas que você talvez conheça", "pessoas também viram"]):
-                    continue
+            for sec in sections:
+                text = sec.text
+                # Seções úteis tem mais de 20 caracteres de texto legível
+                if text and len(text) > 20:
+                    lines = [line.strip() for line in text.split('\n') if line.strip() and len(line.strip()) > 2]
                     
-                clean_text = "\n".join(lines)
-                extracted_sections.append(clean_text)
+                    if any(ignored in text.lower() for ignored in ["pessoas que você talvez conheça", "pessoas também viram", "outros perfis", "pesquisar por", "sugestões"]):
+                        continue
+                        
+                    clean_text = "\n".join(lines)
+                    if clean_text not in extracted_sections:
+                        extracted_sections.append(clean_text)
+                        
+        except Exception as e:
+            print(f"Erro ao buscar 'main' ou 'sections': {e}")
 
         if not extracted_sections:
-            print("❌ Erro: Não foi possível extrair o texto das seções do seu perfil.")
+            print("❌ Erro: Não foi possível extrair o texto das seções do seu perfil. O layout pode estar ofuscado.")
             return
 
         # Junta todas as seções com duas quebras de linha entre elas
