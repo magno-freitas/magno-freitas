@@ -10,9 +10,35 @@
 ### 🔥 About Me
 
 <!-- LINKEDIN_ABOUT_START -->
-<!-- IA FAILING -->
+### 👨‍💻 About Me
+I am a Systems Developer and Finance Associate with a strong passion for Data Science, currently studying at FURB - Universidade de Blumenau. My primary focus is on merging the precision of the financial sector with the power of data analytics and automation, constantly seeking to apply my technical background to identify opportunities for improvement and future workflow automation.
 
-Erro ao conectar com a IA Groq para formatar o currículo.
+### 📚 Education
+* Studying Data Science at FURB - Universidade de Blumenau
+* Technician in Systems Development
+
+### 📈 Experience
+* Systems Developer and Finance Associate at Infios
+* Experience in backend development (Java/Spring Boot), Python automation, and data analysis via BigQuery
+* Solid foundation in programming logic (SAEP) and experience with IoT systems
+
+### 🎯 Skills
+* Java
+* Python
+* Google BigQuery
+* Software Development
+* Spring Framework
+
+### 🏆 Achievements
+* Award-winning foundation in programming logic (SAEP)
+* Outstanding student in the SAEP exam
+
+### 📊 Projects
+* Currently working on various projects that involve data analysis and automation using Python and BigQuery
+* Experience with IoT systems and backend development using Java and Spring Boot
+
+### 💻 Certifications and Courses
+* Introduction to Bootcamp - Java and QA (dio.me)
 <!-- LINKEDIN_ABOUT_END -->
 
 ---
