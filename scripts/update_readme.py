@@ -15,8 +15,11 @@ def main():
 
     print(f"Tentando autenticar no LinkedIn usando Cookies de Sessão...")
     try:
-        # Usa o repositório não-oficial injetando os cookies para pular o login
-        api = Linkedin("", "", cookies={'li_at': LINKEDIN_LI_AT, 'JSESSIONID': LINKEDIN_JSESSIONID})
+        # Usa o repositório não-oficial. Como contornar o bug dos cookies:
+        api = Linkedin("", "") 
+        # Injeta os cookies manualmente na sessão do requests que a lib usa por baixo
+        api.client.session.cookies.set('li_at', LINKEDIN_LI_AT)
+        api.client.session.cookies.set('JSESSIONID', LINKEDIN_JSESSIONID)
         
         print(f"Buscando perfil de: {LINKEDIN_PROFILE_ID}")
         profile = api.get_profile(LINKEDIN_PROFILE_ID)
