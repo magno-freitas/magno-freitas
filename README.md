@@ -9,6 +9,7 @@
 
 ### 🔥 About Me
 
+<!-- LINKEDIN_ABOUT_START -->
 I'm a **18-year-old programming enthusiast** from Brazil, specializing in IoT systems and backend development. When I'm not coding, you'll find me:
 
 - 🌐 Developing IoT solutions with ESP32 and Arduino
@@ -18,6 +19,7 @@ I'm a **18-year-old programming enthusiast** from Brazil, specializing in IoT sy
 - 📊 Documenting systems with Mermaid.js
 
 **Current Focus:** Building scalable IoT platforms with backend integration
+<!-- LINKEDIN_ABOUT_END -->
 
 ---
 
