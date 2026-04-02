@@ -49,6 +49,8 @@ def main():
 
     except Exception as e:
         print(f"Erro durante a execução: {e}")
+        import sys
+        sys.exit(1)  # Isso faz o GitHub Action reportar falha
 
 if __name__ == '__main__':
     main()
