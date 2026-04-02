@@ -2,7 +2,7 @@
 
 <div align="center">
   <h1>🚀 Welcome to My Space! 🚀</h1>
-  <h3>Magno Freitas • IoT & Backend Developer</h3>
+  <h3>Magno Freitas • Backend Developer</h3>
 </div>
 
 ---
