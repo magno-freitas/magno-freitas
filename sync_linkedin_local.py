@@ -56,7 +56,7 @@ def format_with_ai(raw_text):
         }
         
         payload = {
-            "model": "llama3-70b-8192",
+            "model": "llama-3.3-70b-versatile",
             "messages": [
                 {"role": "system", "content": "You are a helpful assistant that only outputs pure markdown."},
                 {"role": "user", "content": prompt}
