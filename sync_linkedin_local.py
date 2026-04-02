@@ -15,15 +15,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 LINKEDIN_LI_AT = os.getenv('LINKEDIN_LI_AT')
-GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 LINKEDIN_PROFILE_ID = 'magno-freitas'
 
 def format_with_ai(raw_text):
-    if not GROQ_API_KEY:
-        print("⚠️ Chave GROQ_API_KEY não encontrada! Pulando formatação com IA...")
+    if not GEMINI_API_KEY:
+        print("⚠️ Chave GEMINI_API_KEY não encontrada! Pulando formatação com IA...")
         return raw_text
         
-    print("🤖 Enviando dados crus para a Groq (Llama 3) processar e formatar na velocidade da luz...")
+    print("🤖 Enviando dados crus para o Google Gemini processar e formatar com perfeição visual...")
     
     prompt = f"""
     Você é um recrutador tech internacional e um engenheiro de software especialista em design de README do GitHub.
@@ -34,44 +34,49 @@ def format_with_ai(raw_text):
     1. Limpar todo esse lixo visual de site.
     2. Pegar APENAS as informações ÚTEIS (Experiência, Sobre mim, Projetos, Skills, Educação).
     3. Traduzir tudo de forma impecável para o INGLÊS profissional.
-    4. Criar um documento Markdown organizado em seções elegantes, usando emojis.
+    4. Criar um documento Markdown organizado em seções elegantes, usando emojis, listas bonitas e espaçamento. O layout precisa impressionar!
     
     Siga as regras:
     - Não coloque título `<h1>` principal ou `# Welcome`, comece direto na seção `### 👨‍💻 About Me`
     - Não coloque bloco ```markdown em volta do resultado.
     - Devolva a resposta final 100% pronta para eu colar no meu readme.
-    - Mantenha simples, moderno e direto.
     
     DADOS DO LINKEDIN:
     {raw_text}
     """
 
     try:
-        # Usa o Llama 3 70B através da incrível infraestrutura LPU da Groq (Grátis e ultra rápida)
-        url = "https://api.groq.com/openai/v1/chat/completions"
+        # Usando a v1beta e o gemini-1.5-pro que é o melhor modelo pra raciocínio longo
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key={GEMINI_API_KEY}"
         
         headers = {
-            'Content-Type': 'application/json',
-            'Authorization': f"Bearer {GROQ_API_KEY}"
+            'Content-Type': 'application/json'
         }
         
         payload = {
-            "model": "llama-3.3-70b-versatile",
-            "messages": [
-                {"role": "system", "content": "You are a helpful assistant that only outputs pure markdown."},
-                {"role": "user", "content": prompt}
-            ],
-            "temperature": 0.2
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.3}
         }
         
-        response = requests.post(url, headers=headers, json=payload)
+        response = None
+        max_retries = 3
+        
+        for attempt in range(max_retries):
+            response = requests.post(url, headers=headers, json=payload)
+            if response.status_code == 200:
+                break
+            elif response.status_code == 503 or response.status_code == 429:
+                print(f"⏳ O Google Gemini está congestionado ou com limite de taxa (Erro {response.status_code}). Tentativa {attempt + 1} de {max_retries}... Aguardando 20s.")
+                time.sleep(20)
+            else:
+                break
         
         if response.status_code != 200:
-            print(f"Erro da API da Groq: {response.text}")
-            return "<!-- IA FAILING -->\n\nErro ao conectar com a IA Groq para formatar o currículo."
+            print(f"Erro da API do Gemini ({response.status_code}): {response.text}")
+            return "<!-- IA FAILING -->\n\nErro ao conectar com a IA do Google para formatar o currículo."
             
         response_data = response.json()
-        formatted_text = response_data['choices'][0]['message']['content']
+        formatted_text = response_data['candidates'][0]['content']['parts'][0]['text']
         
         # Limpando caso o modelo retorne dentro de uma tag de codeblock de markdown
         if formatted_text.startswith("```markdown"):
@@ -81,10 +86,10 @@ def format_with_ai(raw_text):
         if formatted_text.endswith("```"):
             formatted_text = formatted_text[::-1].replace("```", "", 1)[::-1]
             
-        print("✨ O Groq devolveu o perfil formatado com sucesso!")
+        print("✨ O Gemini devolveu o perfil formatado com sucesso!")
         return formatted_text.strip()
     except Exception as e:
-        print(f"❌ Erro ao falar com a API da Groq via HTTP: {e}")
+        print(f"❌ Erro ao falar com a API do Gemini via HTTP: {e}")
         return "<!-- IA FAILING -->\n\nErro interno de conexão."
 
 def run_git_commands():
