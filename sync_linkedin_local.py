@@ -26,22 +26,36 @@ def format_with_ai(raw_text):
     print("🤖 Enviando dados crus para o Google Gemini processar e formatar com perfeição visual...")
     
     prompt = f"""
-    Você é um recrutador tech internacional e um engenheiro de software especialista em design de README do GitHub.
+    You are an elite, international Tech Recruiter and a Staff Software Engineer evaluating top-tier backend and data professionals. 
     
-    Eu vou te passar os dados brutos de um scrape do meu LinkedIn. Ele está cheio de lixo (como "Gostar", "Comentar", "Enviar", "Exibido apenas a você").
+    I will provide you with raw, messy scraped data from my LinkedIn profile (which may contain UI noise like "Like", "Comment", "Share", "Followers").
     
-    SUA TAREFA EXCLUSIVA:
-    1. Limpar todo esse lixo visual de site.
-    2. Pegar APENAS as informações ÚTEIS (Experiência, Sobre mim, Projetos, Skills, Educação).
-    3. Traduzir tudo de forma impecável para o INGLÊS profissional.
-    4. Criar um documento Markdown organizado em seções elegantes, usando emojis, listas bonitas e espaçamento. O layout precisa impressionar!
+    YOUR EXCLUSIVE MISSION:
+    1. Filter out absolutely ALL website UI noise and meaningless metrics.
+    2. Extract only my genuine professional value (Experience, About Me, Projects, Skills, Education).
+    3. Translate everything flawlessly into highly professional, IMPACT-DRIVEN ENGLISH.
+    4. Rewrite the content to reflect a **SENIOR-LEVEL PROFESSIONAL** tone. Instead of just listing tasks, frame them as scalable solutions, business impacts, and architectural decisions. Elevate the language (e.g., instead of "I make Python scripts", use "I engineer automated Python pipelines to optimize business workflows").
+    5. Format the output as an elegant, clean GitHub README Markdown section.
     
-    Siga as regras:
-    - Não coloque título `<h1>` principal ou `# Welcome`, comece direto na seção `### 👨‍💻 About Me`
-    - Não coloque bloco ```markdown em volta do resultado.
-    - Devolva a resposta final 100% pronta para eu colar no meu readme.
+    REQUIRED SECTIONS & STRUCTURE:
+    ### 👨‍💻 Professional Summary
+    (A powerful, senior-level 2-3 sentence elevator pitch about my focus on scalable Backend systems, IoT integrations, and Data Analytics).
+
+    ### 💼 Professional Experience
+    (Format each role cleanly. Focus on impact, metrics, and technology stack used. Use elegant bullet points).
+
+    ### 🛠️ Core Stack & Architecture
+    (Group my skills logically: Backend & API, Data & Cloud Analytics, IoT & Hardware).
+
+    ### 🎓 Education & Certifications
+    (Clean list of my academic background and relevant achievements).
     
-    DADOS DO LINKEDIN:
+    RULES:
+    - DO NOT include an `<h1>` main title or `# Welcome`, start directly at `### 👨‍💻 Professional Summary`.
+    - DO NOT wrap your response in ```markdown blocks. Just return the raw markdown text.
+    - Keep the design minimalist, modern, and highly authoritative.
+    
+    LINKEDIN RAW DATA:
     {raw_text}
     """
 
