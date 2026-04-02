@@ -8,9 +8,12 @@ import os
 import re
 import time
 import subprocess
-import requests
-import json
 from dotenv import load_dotenv
+
+# Truque mágico para fazer o Python 3.14 não dar crash na biblioteca do Google!
+# Forçamos o uso do Protobuf em Python puro em vez da extensão em C++.
+os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
+import google.generativeai as genai
 
 # Carrega variáveis de ambiente de um arquivo .env local
 load_dotenv()
@@ -24,9 +27,11 @@ def format_with_gemini(raw_text):
         print("⚠️ Chave GEMINI_API_KEY não encontrada! Pulando formatação com IA...")
         return raw_text
         
-    print("🤖 Enviando dados crus para a API do Google Gemini Pro processar e formatar...")
+    print("🤖 Enviando dados crus para a API do Google Gemini processar e formatar...")
     try:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key={GEMINI_API_KEY}"
+        genai.configure(api_key=GEMINI_API_KEY)
+        # Deixamos a biblioteca cuidar do nome do modelo, ela sempre sabe a versão atual
+        model = genai.GenerativeModel('gemini-1.5-flash')
         
         prompt = f"""
         Você é um recrutador tech e um especialista em design de README do GitHub.
@@ -38,25 +43,14 @@ def format_with_gemini(raw_text):
         - Organize por seções lógicas (Ex: 💼 Experiência, 🎓 Educação, 🚀 Projetos/Competências, etc).
         - Use listas e tópicos curtos (bullet points) no lugar de textões.
         - Não coloque título principal (Ex: "Bem-vindo ao perfil do Magno") pois meu README já tem um cabeçalho. Foque apenas no miolo.
-        - Devolva APENAS o código Markdown gerado, sem blocos de código markdown em volta. O resultado irá direto para o meu arquivo.
+        - Devolva APENAS o código Markdown gerado, sem blocos de código (como ```markdown) em volta. O resultado irá direto para o meu arquivo.
         
         Aqui estão os dados:
         {raw_text}
         """
         
-        headers = {'Content-Type': 'application/json'}
-        payload = {
-            "contents": [{"parts": [{"text": prompt}]}]
-        }
-        
-        response = requests.post(url, headers=headers, json=payload)
-        response_data = response.json()
-        
-        if response.status_code != 200:
-            print(f"Erro da API do Gemini: {response_data}")
-            return raw_text
-            
-        formatted_text = response_data['candidates'][0]['content']['parts'][0]['text']
+        response = model.generate_content(prompt)
+        formatted_text = response.text
         
         # Limpando caso o modelo retorne dentro de uma tag de codeblock de markdown
         if formatted_text.startswith("```markdown"):
@@ -69,7 +63,7 @@ def format_with_gemini(raw_text):
         print("✨ O Gemini devolveu o perfil formatado com sucesso!")
         return formatted_text.strip()
     except Exception as e:
-        print(f"❌ Erro ao falar com a API do Gemini via HTTP: {e}")
+        print(f"❌ Erro ao falar com a API do Gemini: {e}")
         print("Salvando o texto cru por enquanto.")
         return raw_text
 
