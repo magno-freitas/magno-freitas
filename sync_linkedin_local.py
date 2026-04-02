@@ -24,6 +24,27 @@ def format_with_gemini(raw_text):
         return raw_text
         
     print("🤖 Enviando dados crus para a API do Google Gemini processar e formatar via HTTP puro...")
+    
+    prompt = f"""
+    Você é um recrutador tech internacional e um engenheiro de software especialista em design de README do GitHub.
+    
+    Eu vou te passar os dados brutos de um scrape do meu LinkedIn. Ele está cheio de lixo (como "Gostar", "Comentar", "Enviar", "Exibido apenas a você").
+    
+    SUA TAREFA EXCLUSIVA:
+    1. Limpar todo esse lixo visual de site.
+    2. Pegar APENAS as informações ÚTEIS (Experiência, Sobre mim, Projetos, Skills, Educação).
+    3. Traduzir tudo de forma impecável para o INGLÊS profissional.
+    4. Criar um documento Markdown organizado em seções elegantes, usando emojis.
+    
+    Siga as regras:
+    - Não coloque título `<h1>` principal ou `# Welcome`, comece direto na seção `### 👨‍💻 About Me`
+    - Não coloque bloco ```markdown em volta do resultado.
+    - Devolva a resposta final 100% pronta para eu colar no meu readme.
+    
+    DADOS DO LINKEDIN:
+    {raw_text}
+    """
+
     try:
         # Usa a família de modelos mais atual do Google Gemini disponível no seu terminal hoje
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}"
