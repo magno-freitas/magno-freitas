@@ -1,10 +1,10 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import os
 import re
 import time
@@ -40,14 +40,14 @@ def main():
         return
 
     print("Configurando o navegador invisível...")
-    chrome_options = Options()
-    # Descomente a linha abaixo se quiser que a janela do Chrome não apareça
-    # chrome_options.add_argument("--headless=new")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
+    edge_options = Options()
+    # Descomente a linha abaixo se quiser que a janela do Edge não apareça
+    # edge_options.add_argument("--headless=new")
+    edge_options.add_argument("--disable-gpu")
+    edge_options.add_argument("--no-sandbox")
 
-    # Inicia o Chrome
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    # Inicia o Edge
+    driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=edge_options)
     
     try:
         print("Acessando a página principal do LinkedIn para injetar o cookie...")
