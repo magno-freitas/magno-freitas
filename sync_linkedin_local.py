@@ -8,13 +8,58 @@ import os
 import re
 import time
 import subprocess
+import google.generativeai as genai
 from dotenv import load_dotenv
 
 # Carrega variáveis de ambiente de um arquivo .env local
 load_dotenv()
 
 LINKEDIN_LI_AT = os.getenv('LINKEDIN_LI_AT')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 LINKEDIN_PROFILE_ID = 'magno-freitas'
+
+def format_with_gemini(raw_text):
+    if not GEMINI_API_KEY:
+        print("⚠️ Chave GEMINI_API_KEY não encontrada! Pulando formatação com IA...")
+        return raw_text
+        
+    print("🤖 Enviando dados crus para o Google Gemini Pro processar e formatar...")
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-pro')
+        
+        prompt = f"""
+        Você é um recrutador tech e um especialista em design de README do GitHub.
+        Abaixo estão os dados crus raspados do meu perfil do LinkedIn (Sobre mim, experiências, educação, competências, etc).
+        
+        Seu trabalho é pegar essa bagunça de texto e transformar em um Markdown maravilhoso, direto e limpo para o meu README do GitHub.
+        
+        Regras:
+        - Organize por seções lógicas (Ex: 💼 Experiência, 🎓 Educação, 🚀 Projetos/Competências, etc).
+        - Use listas e tópicos curtos (bullet points) no lugar de textões.
+        - Não coloque título principal (Ex: "Bem-vindo ao perfil do Magno") pois meu README já tem um cabeçalho. Foque apenas no miolo.
+        - Devolva APENAS o código Markdown gerado, sem blocos de código (```markdown) em volta. O resultado irá direto para o meu arquivo.
+        
+        Aqui estão os dados:
+        {raw_text}
+        """
+        
+        response = model.generate_content(prompt)
+        # Limpando caso o modelo retorne dentro de uma tag de codeblock de markdown
+        formatted_text = response.text
+        if formatted_text.startswith("```markdown"):
+            formatted_text = formatted_text.replace("```markdown", "", 1)
+        if formatted_text.startswith("```"):
+            formatted_text = formatted_text.replace("```", "", 1)
+        if formatted_text.endswith("```"):
+            formatted_text = formatted_text[::-1].replace("```", "", 1)[::-1]
+            
+        print("✨ O Gemini devolveu o perfil formatado com sucesso!")
+        return formatted_text.strip()
+    except Exception as e:
+        print(f"❌ Erro ao falar com a API do Gemini: {e}")
+        print("Salvando o texto cru por enquanto.")
+        return raw_text
 
 def run_git_commands():
     try:
@@ -125,6 +170,9 @@ def main():
         
         print(f"Dados capturados com sucesso! Tamanho: {len(full_profile_text)} caracteres.")
 
+        # Passa pelo funil da IA antes de escrever
+        final_markdown = format_with_gemini(full_profile_text)
+
         # Atualizando o README
         with open('README.md', 'r', encoding='utf-8') as f:
             readme_content = f.read()
@@ -133,7 +181,7 @@ def main():
         marker_end = r'<!-- LINKEDIN_ABOUT_END -->'
         
         # Formata os dados num bloco de código para o README não quebrar com espaços bizarros
-        formatted_summary = f"\n{full_profile_text}\n"
+        formatted_summary = f"\n{final_markdown}\n"
         
         pattern = re.compile(f'({marker_start}).*?({marker_end})', re.DOTALL)
         updated_readme = pattern.sub(rf'\1{formatted_summary}\2', readme_content)
