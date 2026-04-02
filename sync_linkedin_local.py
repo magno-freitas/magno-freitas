@@ -29,15 +29,16 @@ def format_with_gemini(raw_text):
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}"
         
         prompt = f"""
-        Você é um recrutador tech e um especialista em design de README do GitHub.
-        Abaixo estão os dados crus raspados do meu perfil do LinkedIn (Sobre mim, experiências, educação, competências, etc).
+        Você é um recrutador tech internacional e um especialista em design de README do GitHub.
+        Abaixo estão os dados crus raspados do meu perfil do LinkedIn (Sobre mim, experiências, educação, competências, etc) que podem estar em português ou em inglês.
         
-        Seu trabalho é pegar essa bagunça de texto e transformar em um Markdown maravilhoso, direto e limpo para o meu README do GitHub.
+        Seu trabalho é pegar essa bagunça de texto, TRADUZIR TUDO PARA INGLÊS PROFISSIONAL, e transformar em um Markdown maravilhoso, direto e limpo para o meu README do GitHub.
         
         Regras:
-        - Organize por seções lógicas (Ex: 💼 Experiência, 🎓 Educação, 🚀 Projetos/Competências, etc).
+        - O texto final deve estar 100% em INGLÊS.
+        - Organize por seções lógicas (Ex: 💼 Experience, 🎓 Education, 🚀 Skills & Projects, etc).
         - Use listas e tópicos curtos (bullet points) no lugar de textões.
-        - Não coloque título principal (Ex: "Bem-vindo ao perfil do Magno") pois meu README já tem um cabeçalho. Foque apenas no miolo.
+        - Não coloque título principal (Ex: "Welcome to Magno's profile") pois meu README já tem um cabeçalho. Foque apenas no miolo.
         - Devolva APENAS o código Markdown gerado, sem blocos de código (como ```markdown) em volta. O resultado irá direto para o meu arquivo.
         
         Aqui estão os dados:
