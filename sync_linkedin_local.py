@@ -60,8 +60,7 @@ def format_with_ai(raw_text):
     """
 
     try:
-        # Usando a v1beta e o gemini-1.5-pro que é o melhor modelo pra raciocínio longo
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key={GEMINI_API_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}"
         
         headers = {
             'Content-Type': 'application/json'
