@@ -25,8 +25,8 @@ jobs:
 
       - name: Executar Script de Sincronização
         env:
-          LINKEDIN_EMAIL: ${{ secrets.LINKEDIN_EMAIL }}
-          LINKEDIN_PASSWORD: ${{ secrets.LINKEDIN_PASSWORD }}
+          LINKEDIN_LI_AT: ${{ secrets.LINKEDIN_LI_AT }}
+          LINKEDIN_JSESSIONID: ${{ secrets.LINKEDIN_JSESSIONID }}
         run: python scripts/update_readme.py
 
       - name: Commit e Push das Alterações

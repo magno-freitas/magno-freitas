@@ -3,19 +3,20 @@ import re
 from linkedin_api import Linkedin
 
 # Pegando as credenciais dos Secrets do GitHub
-LINKEDIN_EMAIL = os.getenv('LINKEDIN_EMAIL')
-LINKEDIN_PASSWORD = os.getenv('LINKEDIN_PASSWORD')
+LINKEDIN_LI_AT = os.getenv('LINKEDIN_LI_AT')
+LINKEDIN_JSESSIONID = os.getenv('LINKEDIN_JSESSIONID')
 LINKEDIN_PROFILE_ID = 'magno-freitas'  # Seu ID no linkedin.com/in/...
 
 def main():
-    if not LINKEDIN_EMAIL or not LINKEDIN_PASSWORD:
-        print("Erro: Credenciais do LinkedIn não encontradas nas variáveis de ambiente.")
-        return
+    if not LINKEDIN_LI_AT or not LINKEDIN_JSESSIONID:
+        print("Erro: Cookies do LinkedIn (li_at e JSESSIONID) não encontrados nas variáveis de ambiente.")
+        import sys
+        sys.exit(1)
 
-    print(f"Tentando autenticar no LinkedIn...")
+    print(f"Tentando autenticar no LinkedIn usando Cookies de Sessão...")
     try:
-        # Autentica na API não-oficial do LinkedIn
-        api = Linkedin(LINKEDIN_EMAIL, LINKEDIN_PASSWORD)
+        # Usa o repositório não-oficial injetando os cookies para pular o login
+        api = Linkedin("", "", cookies={'li_at': LINKEDIN_LI_AT, 'JSESSIONID': LINKEDIN_JSESSIONID})
         
         print(f"Buscando perfil de: {LINKEDIN_PROFILE_ID}")
         profile = api.get_profile(LINKEDIN_PROFILE_ID)
