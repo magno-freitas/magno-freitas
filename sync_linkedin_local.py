@@ -4,7 +4,6 @@ from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import os
 import re
 import time
@@ -46,8 +45,19 @@ def main():
     edge_options.add_argument("--disable-gpu")
     edge_options.add_argument("--no-sandbox")
 
-    # Inicia o Edge
-    driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=edge_options)
+    # Informa ao Selenium para usar o executável que está salvo na mesma pasta do script
+    driver_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "msedgedriver.exe")
+    if not os.path.exists(driver_path):
+        print(f"❌ Erro: O arquivo '{driver_path}' não foi encontrado.")
+        print("Por favor, baixe o msedgedriver para a versão 146 e coloque-o na mesma pasta do script.")
+        return
+
+    try:
+        service = Service(executable_path=driver_path)
+        driver = webdriver.Edge(service=service, options=edge_options)
+    except Exception as e:
+        print(f"❌ Erro ao iniciar o Edge com o driver manual: {e}")
+        return
     
     try:
         print("Acessando a página principal do LinkedIn para injetar o cookie...")
