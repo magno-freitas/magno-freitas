@@ -75,35 +75,46 @@ def main():
         driver.get(f'https://www.linkedin.com/in/{LINKEDIN_PROFILE_ID}/')
         
         # O LinkedIn carrega as páginas sob demanda, então esperamos o componente Sobre aparecer
-        print("Aguardando carregamento da seção 'Sobre'...")
-        try:
-            # Procura pelo container da seção "Sobre" (Summary)
-            about_section = WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.XPATH, "//div[@id='about']//ancestor::section//div[contains(@class, 'display-flex ph5 pv3')]"))
-            )
-            # A partir de 2024, o texto fica geralmente no componente de "ver mais" ou logo abaixo do About
-            summary_element = about_section.find_element(By.XPATH, ".//span[@aria-hidden='true']")
-            summary_text = summary_element.text
-        except Exception:
-            # Fallback para caso o layout seja diferente
-            print("Layout principal falhou, tentando fallback (procurando qualquer span no contexto 'Sobre')...")
-            # Enrola a página um pouco para ativar o carregamento das text areas
-            driver.execute_script("window.scrollTo(0, 500);")
-            time.sleep(2)
-            elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'Sobre') or contains(text(), 'About')]/ancestor::section//span[@aria-hidden='true']")
-            # O primeiro span dentro do componente "Sobre" costuma ser o texto em si, o índice 1 pega o texto visível
-            if len(elements) > 1:
-                summary_text = elements[1].text
-            elif elements:
-                summary_text = elements[0].text
-            else:
-                summary_text = ""
+        print("Aguardando carregamento da página completa...")
+        time.sleep(5) # Espera um tempo fixo para o perfil carregar
+        
+        # O LinkedIn carrega dinamicamente. Vamos rolar a página até o fim para forçar o carregamento de todas as seções
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(3)
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(2)
+
+        print("Extraindo todo o texto das seções principais do perfil...")
+        
+        extracted_sections = []
+        
+        # O LinkedIn encapsula as seções importantes em tags <section> com certos identificadores
+        # Vamos pegar todas as seções que contenham as classes comuns de conteúdo de perfil
+        sections = driver.find_elements(By.XPATH, "//section[contains(@class, 'artdeco-card') or contains(@class, 'pv-profile-card')]")
+        
+        for sec in sections:
+            # Pegando o texto visível da seção inteira
+            text = sec.text
+            if text and len(text) > 10:
+                # O LinkedIn tem muitos botões como "Mostrar todos", "Exibir", etc. 
+                # Vamos tentar filtrar linhas muito curtas que são só botões
+                lines = [line.strip() for line in text.split('\n') if line.strip() and len(line.strip()) > 3]
                 
-        if not summary_text:
-            print("❌ Erro: Não foi possível extrair a seção 'Sobre' do seu perfil.")
+                # Ignora a seção de "Pessoas que você talvez conheça" e similares do layout lateral
+                if any(ignored in text.lower() for ignored in ["pessoas que você talvez conheça", "pessoas também viram"]):
+                    continue
+                    
+                clean_text = "\n".join(lines)
+                extracted_sections.append(clean_text)
+
+        if not extracted_sections:
+            print("❌ Erro: Não foi possível extrair o texto das seções do seu perfil.")
             return
 
-        print(f"Resumo capturado com sucesso! Trecho: {summary_text[:50]}...")
+        # Junta todas as seções com duas quebras de linha entre elas
+        full_profile_text = "\n\n---\n\n".join(extracted_sections)
+        
+        print(f"Dados capturados com sucesso! Tamanho: {len(full_profile_text)} caracteres.")
 
         # Atualizando o README
         with open('README.md', 'r', encoding='utf-8') as f:
@@ -112,7 +123,8 @@ def main():
         marker_start = r'<!-- LINKEDIN_ABOUT_START -->'
         marker_end = r'<!-- LINKEDIN_ABOUT_END -->'
         
-        formatted_summary = f"\n{summary_text}\n"
+        # Formata os dados num bloco de código para o README não quebrar com espaços bizarros
+        formatted_summary = f"\n{full_profile_text}\n"
         
         pattern = re.compile(f'({marker_start}).*?({marker_end})', re.DOTALL)
         updated_readme = pattern.sub(rf'\1{formatted_summary}\2', readme_content)
