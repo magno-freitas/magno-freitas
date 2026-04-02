@@ -10,9 +10,30 @@
 ### 🔥 About Me
 
 <!-- LINKEDIN_ABOUT_START -->
-<!-- IA FAILING -->
+### 👨‍💻 Professional Summary
+Strategic Systems Developer and Data Science specialist focused on architecting high-performance backend solutions and automated data pipelines. I specialize in bridging the gap between complex financial operations and scalable technology, leveraging Java, Python, and cloud-native analytics to drive business intelligence and operational excellence.
 
-Erro ao conectar com a IA do Google para formatar o currículo.
+### 💼 Professional Experience
+
+**Finance Associate & Systems Developer | Infios**
+*   **Architected automated Python pipelines** to streamline complex financial workflows, significantly reducing manual processing time and enhancing data integrity.
+*   **Developed and maintained robust backend services** utilizing Java and the Spring Boot ecosystem to support internal business logic and system integrations.
+*   **Engineered data-driven solutions** using Google BigQuery, transforming raw financial datasets into actionable analytical models for executive decision-making.
+*   **Integrated IoT system concepts** into operational frameworks to improve hardware-software synergy and data collection efficiency.
+
+### 🛠️ Core Stack & Architecture
+
+*   **Backend & API Engineering:** Java, Spring Framework, Spring Boot, RESTful API Design, Programming Logic.
+*   **Data & Cloud Analytics:** Python (Automation & Scripting), Google BigQuery, Data Modeling, ETL Pipelines.
+*   **IoT & Hardware:** IoT System Integration, Hardware-Software Interfacing, Systems Automation.
+*   **Quality & DevOps:** Quality Assurance (QA) Methodologies, Systems Development Life Cycle (SDLC).
+
+### 🎓 Education & Certifications
+
+*   **B.S. in Data Science** | FURB - Universidade de Blumenau
+*   **Systems Development Technician** | Awarded "Top Performer" (Destaque) in the SAEP National Examination for excellence in programming logic and technical proficiency.
+*   **Java & QA Bootcamp** | Digital Innovation One (DIO)
+*   **Advanced Programming Logic** | Technical Certification focusing on algorithmic efficiency and scalable architecture.
 <!-- LINKEDIN_ABOUT_END -->
 
 ---
