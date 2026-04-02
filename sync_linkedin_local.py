@@ -28,40 +28,28 @@ def format_with_gemini(raw_text):
         # Usa a família de modelos mais atual do Google Gemini disponível no seu terminal hoje
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}"
         
-        prompt = f"""
-        Você é um recrutador tech internacional e um engenheiro de software especialista em design de README do GitHub.
-        
-        Eu vou te passar os dados brutos de um scrape do meu LinkedIn. Ele está cheio de lixo (como "Gostar, Comentar, Enviar, Exibido apenas a você").
-        
-        SUA TAREFA EXCLUSIVA:
-        1. Limpar todo esse lixo.
-        2. Pegar as informações ÚTEIS (Experiência, Sobre mim, Projetos, Skills, Educação).
-        3. Traduzir tudo de forma natural para o INGLÊS.
-        4. Criar um documento Markdown organizado em seções elegantes:
-           - 👨‍💻 About Me
-           - 💼 Experience
-           - 🛠️ Skills & Technologies
-           - 🎓 Education
-        
-        Siga as regras:
-        - Não coloque título `<h1>` ou `# Welcome`, comece direto no `### 👨‍💻 About Me`
-        - Não coloque bloco ````markdown
-        - Devolva a resposta final 100% pronta para eu colar no meu readme.
-        
-        DADOS DO LINKEDIN:
-        {raw_text}
-        """
-        
         headers = {'Content-Type': 'application/json'}
         payload = {
             "contents": [{"parts": [{"text": prompt}]}]
         }
         
-        response = requests.post(url, headers=headers, json=payload)
-        
+        # Sistema de repetição caso a cota do Google esteja muito requisitada (Erro 503)
+        max_retries = 3
+        response = None
+        for attempt in range(max_retries):
+            response = requests.post(url, headers=headers, json=payload)
+            if response.status_code == 200:
+                break
+            elif response.status_code == 503:
+                print(f"⏳ O Google Gemini está congestionado (Erro 503). Tentativa {attempt + 1} de {max_retries}... Aguardando 15s.")
+                time.sleep(15)
+            else:
+                break
+                
         if response.status_code != 200:
             print(f"Erro da API do Gemini: {response.text}")
-            return raw_text
+            # Em vez de salvar lixo, devolvemos uma flag para sabermos que a IA falhou. O README atual não será poluído.
+            return "<!-- IA FAILING -->\n\nErro ao conectar com a IA do Google para formatar o currículo."
             
         response_data = response.json()
         formatted_text = response_data['candidates'][0]['content']['parts'][0]['text']
