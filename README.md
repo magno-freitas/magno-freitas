@@ -10,15 +10,98 @@
 ### 🔥 About Me
 
 <!-- LINKEDIN_ABOUT_START -->
-I'm a **18-year-old programming enthusiast** from Brazil, specializing in IoT systems and backend development. When I'm not coding, you'll find me:
+Magno Freitas
+Systems Developer & Finance Associate | Data Science Student
+Blumenau, Santa Catarina, Brasil
+Dados de contato
+Infios
+FURB - Universidade de Blumenau
+7 conexões
+Disponível para
+Adicionar seção
+Aprimorar perfil
 
-- 🌐 Developing IoT solutions with ESP32 and Arduino
-- 🖥️ Building robust backend systems with Spring Boot
-- 🐳 Containerizing applications with Docker
-- 🧪 Writing unit tests with JUnit
-- 📊 Documenting systems with Mermaid.js
+---
 
-**Current Focus:** Building scalable IoT platforms with backend integration
+Análise
+Exibido apenas a você
+14 visualizações do perfil
+Saiba quem viu seu perfil.
+10 Impressões da publicação
+Confira quem está interagindo com suas publicações.
+Últimos 7 dias
+3 ocorrências em resultados de pesquisa
+Veja a frequência com que seu perfil é exibido em resultados de pesquisa.
+Exibir tudo
+
+---
+
+Sobre
+Data Science student at FURB and Systems Development Technician, currently working as a Finance Associate at Infios. My main focus is merging the precision of the financial sector with the power of data analytics and automation, constantly seeking to apply my technical background to identify opportunities for improvement and future workflow automation.
+With experience in backend development (Java/Spring Boot), Python automation, and data analysis via BigQuery, I also possess a solid, award-winning foundation in programming logic (SAEP) and experience with IoT systems. I believe in transforming raw data into intelligent decisions through automation scripts and analytical models
+… mais
+Principais competências
+Java • Python • Google BigQuery • Desenvolvimento de software • Spring Framework
+
+---
+
+Atividades
+9 seguidores
+Criar publicação
+Publicações
+Imagens
+Magno Freitas
+•Você
+Systems Developer & Finance Associate | Data Science Student
+4 sem •
+Aluno de Maior Destaque na prova SAEP | Técnico em Desenvolvimento de Sistemas
+Ana Bosquetti e mais 5 pessoas reagiram
+Ana Bosquetti e mais 5 pessoas
+1 comentário
+1 comentário
+Gostar
+Comentar
+Compartilhar
+Enviar
+Magno Freitas
+•Você
+Systems Developer & Finance Associate | Data Science Student
+5 m •
+Introdução ao Bootcamp - Java e QA
+Introdução ao Bootcamp - Java e QA
+dio.me
+Gostar
+Comentar
+Compartilhar
+Enviar
+Exibir tudo
+
+---
+
+Magno Freitas
+•Você
+Systems Developer & Finance Associate | Data Science Student
+4 sem •
+Aluno de Maior Destaque na prova SAEP | Técnico em Desenvolvimento de Sistemas
+Ana Bosquetti e mais 5 pessoas reagiram
+Ana Bosquetti e mais 5 pessoas
+1 comentário
+1 comentário
+Gostar
+Comentar
+Compartilhar
+Enviar
+Magno Freitas
+•Você
+Systems Developer & Finance Associate | Data Science Student
+5 m •
+Introdução ao Bootcamp - Java e QA
+Introdução ao Bootcamp - Java e QA
+dio.me
+Gostar
+Comentar
+Compartilhar
+Enviar
 <!-- LINKEDIN_ABOUT_END -->
 
 ---
