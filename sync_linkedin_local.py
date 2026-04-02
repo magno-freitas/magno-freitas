@@ -25,7 +25,7 @@ def format_with_gemini(raw_text):
         
     print("🤖 Enviando dados crus para a API do Google Gemini processar e formatar via HTTP puro...")
     try:
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={GEMINI_API_KEY}"
         
         prompt = f"""
         Você é um recrutador tech e um especialista em design de README do GitHub.
