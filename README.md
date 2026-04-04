@@ -9,6 +9,8 @@
 
 ### 🔥 About Me
 
+> **🤖 Automated Profile:** This README is automatically synced with my LinkedIn profile using a custom **Python Automation** pipeline I built. It leverages **Selenium** for Web Scraping and integrates with Google's Gemini **LLM Processing (AI Integration)** to translate and format my data into this markdown file.
+
 <!-- LINKEDIN_ABOUT_START -->
 ### 👨‍💻 Professional Summary
 Results-oriented Systems Developer and Data Science specialist focused on bridging the gap between complex financial operations and scalable backend architecture. Expert in engineering automated pipelines and intelligent systems that transform raw data into actionable business intelligence, with a core focus on Python-driven AI, Java Spring Boot ecosystems, and high-performance API integrations.
