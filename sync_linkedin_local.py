@@ -178,7 +178,7 @@ def main():
         extracted_sections = []
         
         # Estratégia coringa: O LinkedIn muda nomes de classes o tempo todo. 
-        # Sabemos que o perfil fica dentro da main class 'scaffold-layout__main'
+        # Sabemos que o perfil fica dentro da main class 'scaffold-layout__main' 
         try:
             main_layout = driver.find_element(By.TAG_NAME, "main")
             
