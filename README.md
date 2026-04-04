@@ -11,29 +11,35 @@
 
 <!-- LINKEDIN_ABOUT_START -->
 ### 👨‍💻 Professional Summary
-Strategic Systems Developer and Data Science specialist focused on architecting high-performance backend solutions and automated data pipelines. I specialize in bridging the gap between complex financial operations and scalable technology, leveraging Java, Python, and cloud-native analytics to drive business intelligence and operational excellence.
+Results-oriented Systems Developer and Data Science specialist focused on bridging the gap between complex financial operations and scalable backend architecture. Expert in engineering automated pipelines and intelligent systems that transform raw data into actionable business intelligence, with a core focus on Python-driven AI, Java Spring Boot ecosystems, and high-performance API integrations.
 
 ### 💼 Professional Experience
 
-**Finance Associate & Systems Developer | Infios**
-*   **Architected automated Python pipelines** to streamline complex financial workflows, significantly reducing manual processing time and enhancing data integrity.
-*   **Developed and maintained robust backend services** utilizing Java and the Spring Boot ecosystem to support internal business logic and system integrations.
-*   **Engineered data-driven solutions** using Google BigQuery, transforming raw financial datasets into actionable analytical models for executive decision-making.
-*   **Integrated IoT system concepts** into operational frameworks to improve hardware-software synergy and data collection efficiency.
+**Infios**  
+*Systems Developer & Financial Operations*  
+*   **Architected and optimized ERP business rules**, streamlining financial workflows and enhancing data integrity across corporate systems.
+*   **Engineered robust API integrations** to facilitate seamless data exchange between heterogeneous platforms, reducing manual overhead and operational latency.
+*   **Led technical initiatives within an Agile (Scrum) environment**, consistently delivering high-impact features through iterative sprints and cross-functional collaboration.
+*   **Leveraged Python for advanced automation**, developing custom scripts to synchronize financial datasets and generate predictive operational insights.
+
+**Independent Technical Projects**  
+*Lead Engineer | Portfolio Automation & GenAI*  
+*   **Designed an end-to-end CI/CD pipeline** utilizing Python and Selenium to automate professional data synchronization between LinkedIn and GitHub.
+*   **Integrated Google Gemini (LLM) APIs** to perform real-time natural language processing, translating and refactoring unstructured data into high-impact professional documentation.
+*   **Implemented resilient error-handling and fallback mechanisms** to ensure pipeline stability across varying network conditions and API rate limits.
 
 ### 🛠️ Core Stack & Architecture
 
-*   **Backend & API Engineering:** Java, Spring Framework, Spring Boot, RESTful API Design, Programming Logic.
-*   **Data & Cloud Analytics:** Python (Automation & Scripting), Google BigQuery, Data Modeling, ETL Pipelines.
-*   **IoT & Hardware:** IoT System Integration, Hardware-Software Interfacing, Systems Automation.
-*   **Quality & DevOps:** Quality Assurance (QA) Methodologies, Systems Development Life Cycle (SDLC).
+*   **Backend & API Engineering:** Java (Spring Boot), Python (FastAPI/Flask), RESTful API Design, Microservices Architecture.
+*   **Data Science & AI:** Predictive Modeling, Generative AI Integration (Gemini/OpenAI), Selenium Web Scraping, Automated Data Pipelines.
+*   **Business Logic & Ops:** ERP System Architecture, Financial Modeling, Agile Methodologies (Scrum/Kanban), Git-based CI/CD.
 
 ### 🎓 Education & Certifications
 
 *   **B.S. in Data Science** | FURB - Universidade de Blumenau
-*   **Systems Development Technician** | Awarded "Top Performer" (Destaque) in the SAEP National Examination for excellence in programming logic and technical proficiency.
-*   **Java & QA Bootcamp** | Digital Innovation One (DIO)
-*   **Advanced Programming Logic** | Technical Certification focusing on algorithmic efficiency and scalable architecture.
+*   **Systems Development Technician** | SENAI/SC
+*   **Specialization: Python for Artificial Intelligence** | Entra21/Proway
+*   **National Award: SAEP Technical Excellence** | Recognized as the "Outstanding Student" for superior performance in logic, systems architecture, and technical proficiency.
 <!-- LINKEDIN_ABOUT_END -->
 
 ---
