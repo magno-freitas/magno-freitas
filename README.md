@@ -77,6 +77,15 @@ Results-oriented Systems Developer and Data Science specialist focused on bridgi
 
 ---
 
+### 📊 GitHub Analytics & Productivity
+
+<div align="center">
+  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=magno-freitas&show_icons=true&theme=tokyonight&include_all_commits=true&count_private=true"/>
+  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=magno-freitas&layout=compact&langs_count=6&theme=tokyonight"/>
+</div>
+
+---
+
 ### 🌐 Let's Connect!
 
 <p>Let's collaborate on IoT and backend projects!</p>
