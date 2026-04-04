@@ -86,6 +86,13 @@ Results-oriented Systems Developer and Data Science specialist focused on bridgi
 
 ---
 
+### 📝 Recent Tech Articles
+<!-- DEVTO_POSTS_START -->
+*No articles published yet. Stay tuned!*
+<!-- DEVTO_POSTS_END -->
+
+---
+
 ### 🌐 Let's Connect!
 
 <p>Let's collaborate on IoT and backend projects!</p>
