@@ -18,7 +18,7 @@ def fetch_latest_posts():
             
         posts = response.json()
         if not posts:
-            print("Nenhum artigo encontrado.")
+            print("Nenhum artigo encontrado no Dev.to ainda.")
             return "*No articles published yet. Stay tuned!*"
             
         markdown_lines = []
