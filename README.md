@@ -88,7 +88,7 @@ Results-oriented Systems Developer and Data Science specialist focused on bridgi
 
 ### 📝 Recent Tech Articles
 <!-- DEVTO_POSTS_START -->
-*No articles published yet. Stay tuned!*
+- 📝 **[Cansado de ter que atualizar o currículo em 2 lugares diferentes? Eu também.](https://dev.to/magno-freitas/cansado-de-ter-que-atualizar-o-curriculo-em-2-lugares-diferentes-eu-tambem-3019)** (_2026-04-04_) - ❤️ 0 reactions
 <!-- DEVTO_POSTS_END -->
 
 ---
